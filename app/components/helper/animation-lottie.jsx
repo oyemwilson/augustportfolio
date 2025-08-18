@@ -1,7 +1,10 @@
-"use client"
+'use client';
 
 import { useEffect, useState } from 'react';
-import Lottie from "lottie-react";
+import dynamic from 'next/dynamic';
+
+// ✅ load lottie-react only in the browser
+const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
 
 const AnimationLottie = ({ animationPath, width = '95%' }) => {
   const [animationData, setAnimationData] = useState(null);
@@ -10,37 +13,27 @@ const AnimationLottie = ({ animationPath, width = '95%' }) => {
   useEffect(() => {
     const loadAnimation = async () => {
       try {
-        // If animationPath is already an object (imported JSON), use it directly
-        if (typeof animationPath === 'object' && animationPath !== null) {
+        if (animationPath && typeof animationPath === 'object') {
           setAnimationData(animationPath);
-          setLoading(false);
           return;
         }
-
-        // If it's a string path, fetch the JSON file
-        if (typeof animationPath === 'string') {
-          const response = await fetch(animationPath);
-          const data = await response.json();
+        if (animationPath && typeof animationPath === 'string') {
+          const res = await fetch(animationPath);
+          const data = await res.json();
           setAnimationData(data);
         }
-      } catch (error) {
-        console.error('Error loading animation:', error);
+      } catch (e) {
+        console.error('Error loading animation:', e);
       } finally {
         setLoading(false);
       }
     };
-
-    if (animationPath) {
-      loadAnimation();
-    }
+    loadAnimation();
   }, [animationPath]);
 
   if (loading) {
     return (
-      <div 
-        style={{ width }} 
-        className="flex items-center justify-center animate-pulse bg-gray-200 rounded"
-      >
+      <div style={{ width }} className="flex items-center justify-center animate-pulse bg-gray-200 rounded">
         <div className="text-gray-500">Loading...</div>
       </div>
     );
@@ -48,25 +41,20 @@ const AnimationLottie = ({ animationPath, width = '95%' }) => {
 
   if (!animationData) {
     return (
-      <div 
-        style={{ width }} 
-        className="flex items-center justify-center bg-gray-100 rounded"
-      >
+      <div style={{ width }} className="flex items-center justify-center bg-gray-100 rounded">
         <div className="text-gray-500">Animation not found</div>
       </div>
     );
   }
 
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: animationData,
-    style: {
-      width: width,
-    }
-  };
-
-  return <Lottie {...defaultOptions} />;
+  return (
+    <Lottie
+      animationData={animationData}
+      loop
+      autoplay
+      style={{ width }}
+    />
+  );
 };
 
 export default AnimationLottie;
