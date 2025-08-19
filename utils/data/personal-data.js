@@ -4,7 +4,7 @@ export const personalData = {
   designation: "Software Developer",
   description: "I’m Wilson Oyem, a detail-oriented developer who enjoys turning ideas into simple, functional digital products. My work blends design sense with technical skill, making interfaces that are clear, responsive, and user-friendly. I thrive in collaborative environments where I can contribute to both technical execution and creative direction. Beyond coding, I value communication, organization, and learning from diverse perspectives. I’m excited about roles where I can build, adapt, and grow while delivering real value to teams and users",
   email: 'oyemwilson1@gmail.com',
-  phone: '+13048009074',
+  phone: '+1 (304) 800-9074',
   address: 'Outlook Overdrive Ohio - 1212 ',
   github: 'https://github.com/oyemwilson',
   facebook: 'https://www.facebook.com/ikennaoyem/',
