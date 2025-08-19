@@ -2,7 +2,7 @@ export const educations = [
   {
     id: 1,
     title: "Postgraduate Diploms",
-    duration: "2024 - 2025",
+    duration: "2023 - 2024",
     institution: "Ahmadu Bello University Zaria(ABU)		",
   },
   {
